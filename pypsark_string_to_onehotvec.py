@@ -1,9 +1,8 @@
-def cat_to_vec(data,varlist,nuisance,assemble = False):
+def cat_to_vec(data,varlist,nuisance,assemble = False,target = "y"):
     '''
     data -- a spark data frame
     varlist -- nominal variable list
     nuisance -- numeric variables or other variables do not need 
-    assemble -- assemble the vectors for modeling or not
     '''
     from pyspark.ml.feature import VectorAssembler
     from pyspark.ml.feature import OneHotEncoder
@@ -23,7 +22,7 @@ def cat_to_vec(data,varlist,nuisance,assemble = False):
         varlist_fix.append(var_fix)
         proced_data = pipeline.fit(proced_data).transform(proced_data)
         #vector_indexer = VectorIndexer(inputCol="bank_vector", outputCol="bank_vec_indexed")
-    model_data = proced_data.select(nuisance+varlist_fix)
+    model_data = proced_data.select(nuisance+varlist_fix+target)
     if assemble == True:
         assembler = VectorAssembler(inputCols= varlist_fix + nuisance, outputCol="features")
         model_data = assembler.transform(model_data)
