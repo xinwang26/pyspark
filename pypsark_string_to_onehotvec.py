@@ -3,6 +3,7 @@ def cat_to_vec(data,varlist,nuisance,assemble = False):
     data -- a spark data frame
     varlist -- nominal variable list
     nuisance -- numeric variables or other variables do not need 
+    assemble -- assemble the vectors for modeling or not
     '''
     from pyspark.ml.feature import VectorAssembler
     from pyspark.ml.feature import OneHotEncoder
